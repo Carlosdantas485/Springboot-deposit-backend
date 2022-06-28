@@ -1,14 +1,14 @@
 package com.project.demo.enums;
 
 public enum OrderStatus {
-	WAITING_PAYMANT(1), PAID(2), SHIPPED(3), DELIVERED(4), CANCELED(5);
+	SEND(1), PAID(2),CANCELED(3);
 
 	private int code;
 
 	private OrderStatus(int code) {
 		this.code = code;
 	}
-
+	
 	public int getCode() {
 		return code;
 	}
@@ -19,7 +19,8 @@ public enum OrderStatus {
 				return value;
 			}
 		}
-		
+
 		throw new IllegalArgumentException("INVALID ORDER STATUS CODE");
 	}
+
 }

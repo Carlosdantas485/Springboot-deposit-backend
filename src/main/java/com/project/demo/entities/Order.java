@@ -25,11 +25,13 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'z'", timezone = "GMT")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd", timezone = "GMT")
 	private Instant moment;
-
+	private Double amount;
 	private Integer orderStatus;
 
+	// para falar que um pedito tem um usuario
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
@@ -37,10 +39,11 @@ public class Order implements Serializable {
 	public Order() {
 	}
 
-	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
+	public Order(Long id, Instant moment, Double amount, OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
-		this.moment = moment;
+		this.moment = Instant.now();
+		this.amount = amount;
 		setOrderStatus(orderStatus);
 		this.client = client;
 	}
@@ -58,7 +61,15 @@ public class Order implements Serializable {
 	}
 
 	public void setMoment(Instant moment) {
-		this.moment = moment;
+		this.moment = Instant.now();
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 	public OrderStatus getOrderStatus() {

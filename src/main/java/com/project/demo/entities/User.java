@@ -12,10 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-@Table(name = "tb_users")
+@Table(name = "tb_Accounts")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -26,28 +24,25 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 	private String phone;
-	private String cpf;
-	private String cnpj;
 	private String password;
 	private Double balance;
+
+	// resolve o problema do JSON em loop
 	
-	@JsonIgnore
+	// para falar que um usuario pode ter varios pedidos
 	@OneToMany(mappedBy = "client")
-	private List <Order> orders = new ArrayList<>();
+	private List<Order> orders = new ArrayList<>();
 
 	public User() {
 
 	}
 
-	public User(Long id, String name, String email, String phone, String cpf, String cnpj, String password,
-			Double balance) {
+	public User(Long id, String name, String email, String phone, String password, Double balance) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		this.cpf = cpf;
-		this.cnpj = cnpj;
 		this.password = password;
 		this.balance = balance;
 	}
@@ -84,22 +79,6 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -114,6 +93,14 @@ public class User implements Serializable {
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
 	}
 
 	@Override
